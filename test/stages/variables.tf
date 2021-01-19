@@ -50,9 +50,14 @@ variable "vpc_cluster" {
 }
 
 variable "cos-instance-name" {
+  type        = string
+  description = "The name of the existing cos instance"
+}
 
+variable "cos-instance-region" {
+  type        = string
 }
 
 variable "cos-bucket-name" {
-
+  type = string
 }

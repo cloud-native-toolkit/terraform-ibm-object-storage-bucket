@@ -7,7 +7,7 @@ data "ibm_resource_group" "resource_group" {
 }
 
 data "ibm_resource_instance" "cos_instance" {
-  name = var.instance-name
+  name     = var.instance-name
   location = var.instance-region
   resource_group_id = data.ibm_resource_group.resource_group.id
 }
