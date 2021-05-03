@@ -30,9 +30,8 @@ variable "name" {
 
 
 variable "region" {
-    description = "Cross-regional bucket location. Supported values are us, eu, and ap.  Default 'us'"
+    description = "Bucket region"
     type        = string
-    default     = "us"
 }
 
 variable "storage_class" {

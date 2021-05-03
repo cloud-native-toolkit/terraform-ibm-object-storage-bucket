@@ -18,4 +18,5 @@ module "dev_cos_bucket" {
   name_prefix         = var.name_prefix
   ibmcloud_api_key    = var.ibmcloud_api_key
   name                = "my-test-bucket-${random_string.random.result}"
+  region              = var.region
 }
