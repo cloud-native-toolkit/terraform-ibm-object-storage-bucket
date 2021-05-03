@@ -20,6 +20,6 @@ resource "ibm_cos_bucket" "bucket_instance" {
   count                   = (var.provision ? 1 : 0)
   bucket_name             = local.bucket_name
   resource_instance_id    = var.cos_instance_id
-  cross_region_location   = var.region
+  region_location         = var.region
   storage_class           = var.storage_class
 }
