@@ -4,39 +4,6 @@ alias: cos-bucket
 type: terraform
 description: Module to provision a bucket in Cloud Object Storage
 tags:
-    - object storage
-    - bucket
-versions:
-- platforms: []
-  dependencies: []
-    - id: resource_group
-      refs:
-        - source: github.com/ibm-garage-cloud/terraform-ibm-resource-group
-          version: ">= 1.0.0"
-    - id: cos
-      refs:
-        - source: github.com/ibm-garage-cloud/terraform-ibm-object-storage
-          version: ">= 1.0.0"
-    - id: kms_key
-      refs:
-        - source: github.com/ibm-garage-cloud/terraform-ibm-kms-key
-          version: ">= 1.0.0"
-  variables:
-    - name: resource_group_name
-      moduleRef:
-        id: resource_group
-        output: name
-    - name: cos_instance_id
-      moduleRef:
-        id: cos
-        output: id
-    - name: kms_key_crn
-      moduleRef:
-        id: kms_key
-        output: crn
-    - name: ibmcloud_api_key
-      scope: global
-    - name: region
-      scope: global
-    - name: name_prefix
-      scope: global
+  - object storage
+  - bucket
+versions: {}
