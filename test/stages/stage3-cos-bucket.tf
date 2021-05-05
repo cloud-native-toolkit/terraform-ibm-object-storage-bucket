@@ -19,4 +19,5 @@ module "dev_cos_bucket" {
   ibmcloud_api_key    = var.ibmcloud_api_key
   name                = "my-test-bucket-${random_string.random.result}"
   region              = var.region
+  kms_key_crn         = module.hpcs_key.crn
 }

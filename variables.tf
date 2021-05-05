@@ -9,7 +9,6 @@ variable "provision" {
     default = true
 }
 
-
 variable "cos_instance_id" {
     description = "id of the COS instance"
     type        = string
@@ -28,7 +27,6 @@ variable "name" {
     default     = ""
 }
 
-
 variable "region" {
     description = "Bucket region"
     type        = string
@@ -40,9 +38,13 @@ variable "storage_class" {
     default     = "standard"
 }
 
-
 variable "ibmcloud_api_key" {
   type        = string
   description = "The IBM Cloud api token"
 }
 
+variable "kms_key_crn" {
+  type        = string
+  description = "The crn of the root key in the KMS"
+  default     = null
+}
