@@ -1,7 +1,7 @@
 name: ibm-object-storage-bucket
 alias: cos-bucket
 type: terraform
-description: Module to provision a bucket in Cloud Object Storage
+description: Module to provision a Cloud Object Storage bucket
 tags:
     - object storage
     - bucket
