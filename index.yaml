@@ -25,6 +25,32 @@ versions:
     #      refs:
     #        - source: github.com/ibm-garage-cloud/terraform-k8s-dashboard
     #          version: ">= 1.6.0"
+    variables: [{name: resource_group_name, type: string, description: The name of the IBM Cloud resource group where the VPC instance will be created.}, {name: provision, type: bool, description: Flag indicating that the instance should be provisioned. If false then an existing instance will be looked up, default: true, optional: true}, {name: cos_instance_id, type: string, description: id of the COS instance, default: "", optional: true}, {name: name_prefix, type: string, description: The name of the cos resource, default: "", optional: true}, {name: name, type: string, description: Name of the bucket, default: "", optional: true}, {name: region, type: string, description: Bucket region}, {name: storage_class, type: string, description: 'Storage class of the bucket. Supported values are standard, vault, cold, flex, smart.', default: standard, optional: true}, {name: ibmcloud_api_key, type: string, description: The IBM Cloud api token}, {name: kms_key_crn, type: string, description: The crn of the root key in the KMS, default: "null", optional: true}]
+    version: v0.1.0
+    outputs:
+      - name: bucket_name
+        description: The name of the COS bucket instance
+      - name: id
+        description: The ID of the COS bucket instance
+  - platforms:
+      - kubernetes
+      - ocp3
+      - ocp4
+    dependencies: []
+    #    - id: cluster
+    #      refs:
+    #        - source: github.com/ibm-garage-cloud/terraform-ibm-container-platform
+    #          version: ">= 1.7.0"
+    #        - source: github.com/ibm-garage-cloud/terraform-k8s-ocp-cluster
+    #          version: ">= 2.0.0"
+    #    - id: namespace
+    #      refs:
+    #        - source: github.com/ibm-garage-cloud/terraform-k8s-namespace
+    #          version: ">= 2.1.0"
+    #    - id: dashboard
+    #      refs:
+    #        - source: github.com/ibm-garage-cloud/terraform-k8s-dashboard
+    #          version: ">= 1.6.0"
     variables: [{name: resource_group_name, type: string, description: The name of the IBM Cloud resource group where the VPC instance will be created.}, {name: provision, type: bool, description: Flag indicating that the instance should be provisioned. If false then an existing instance will be looked up, default: true, optional: true}, {name: cos_instance_id, type: string, description: id of the COS instance, default: "", optional: true}, {name: name_prefix, type: string, description: The name of the cos resource, default: "", optional: true}, {name: name, type: string, description: Name of the bucket, default: "", optional: true}, {name: region, type: string, description: Bucket region}, {name: storage_class, type: string, description: 'Storage class of the bucket. Supported values are standard, vault, cold, flex, smart.', default: standard, optional: true}, {name: ibmcloud_api_key, type: string, description: The IBM Cloud api token}]
     version: v0.0.1
     outputs:
