@@ -7,7 +7,7 @@ tags:
     - bucket
 versions:
 - platforms: []
-  dependencies: []
+  dependencies:
     - id: resource_group
       refs:
         - source: github.com/ibm-garage-cloud/terraform-ibm-resource-group
