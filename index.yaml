@@ -6,4 +6,4 @@ description: Module to provision a bucket in Cloud Object Storage
 tags:
   - object storage
   - bucket
-versions: {}
+versions: []
