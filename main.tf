@@ -2,12 +2,12 @@ resource null_resource print_names {
   provisioner "local-exec" {
     command = "echo 'Resource group: ${var.resource_group_name}'"
   }
-}
-
-data ibm_resource_group resource_group {
-  depends_on = [null_resource.print_names]
-
-  name = var.resource_group_name
+  provisioner "local-exec" {
+    command = "echo 'KMS key crn: ${var.kms_key_crn}'"
+  }
+  provisioner "local-exec" {
+    command = "echo 'COS instance id: ${var.cos_instance_id}'"
+  }
 }
 
 locals {
@@ -16,6 +16,7 @@ locals {
 }
 
 resource ibm_cos_bucket bucket_instance {
+  depends_on              = [null_resource.print_names]
   count                   = (var.provision ? 1 : 0)
 
   bucket_name             = local.bucket_name
