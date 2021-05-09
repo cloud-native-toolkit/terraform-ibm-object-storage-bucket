@@ -22,9 +22,15 @@ variable "name_prefix" {
 }
 
 variable "name" {
-    description = "Name of the bucket"
-    type        = string
-    default     = ""
+  description = "Name of the bucket"
+  type        = string
+  default     = ""
+}
+
+variable "label" {
+  description = "Label used to build the bucket name of not provided."
+  type        = string
+  default     = "bucket"
 }
 
 variable "region" {
