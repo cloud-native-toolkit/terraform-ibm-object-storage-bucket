@@ -3,7 +3,7 @@ resource null_resource print_names {
     command = "echo 'Resource group: ${var.resource_group_name}'"
   }
   provisioner "local-exec" {
-    command = "echo 'KMS key crn: ${var.kms_key_crn}'"
+    command = "echo 'KMS key crn: ${var.kms_key_crn != null ? var.kms_key_crn : ""}'"
   }
   provisioner "local-exec" {
     command = "echo 'COS instance id: ${var.cos_instance_id}'"

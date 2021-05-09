@@ -12,7 +12,6 @@ variable "provision" {
 variable "cos_instance_id" {
     description = "id of the COS instance"
     type        = string
-    default     = ""
 }
 
 variable "name_prefix" {
