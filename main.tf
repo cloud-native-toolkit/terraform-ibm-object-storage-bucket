@@ -12,7 +12,7 @@ resource null_resource print_names {
 
 locals {
   prefix_name       = var.name_prefix != "" ? var.name_prefix : var.resource_group_name
-  bucket_name       = lower(replace(var.name != "" ? var.name : "${var.resource_group_name}-${var.label}", "_", "-"))
+  bucket_name       = lower(replace(var.name != "" ? var.name : "${local.prefix_name}-${var.label}", "_", "-"))
 }
 
 resource ibm_cos_bucket bucket_instance {
