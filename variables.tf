@@ -45,7 +45,8 @@ variable "cross_region_location" {
   validation {
     condition     = contains(["", "us", "eu", "ap"], var.cross_region_location)
     error_message = "The cross_region location must be either 'us', 'eu', or 'ap'."
-  }}
+  }
+}
 
 variable "storage_class" {
     description = "Storage class of the bucket. Supported values are standard, vault, cold, flex, smart."
