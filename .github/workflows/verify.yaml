@@ -14,8 +14,8 @@ jobs:
     container: quay.io/ibmgaragecloud/cli-tools:v0.12.0-lite
     strategy:
       matrix:
-        platform: [ocp4_latest]
-      #      max-parallel: 1
+        platform:
+        - ocp4_latest
       fail-fast: false
     env:
       HOME: /home/devops

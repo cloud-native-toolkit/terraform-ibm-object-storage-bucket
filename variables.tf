@@ -33,8 +33,19 @@ variable "label" {
 }
 
 variable "region" {
-    description = "Bucket region"
-    type        = string
+  description = "Bucket region"
+  type        = string
+}
+
+variable "cross_region_location" {
+  description = "The cross-region location of the bucket. This value is optional. Valid values are (us, eu, and ap). This value takes precedence over others if provided."
+  type        = string
+  default     = ""
+
+  validation {
+    condition     = contains(["", "us", "eu", "ap"], var.cross_region_location)
+    error_message = "The cross_region location must be either 'us', 'eu', or 'ap'."
+  }
 }
 
 variable "storage_class" {
