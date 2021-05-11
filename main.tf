@@ -8,6 +8,12 @@ resource null_resource print_names {
   provisioner "local-exec" {
     command = "echo 'COS instance id: ${var.cos_instance_id}'"
   }
+  provisioner "local-exec" {
+    command = "echo 'Activity Tracker crn: ${var.activity_tracker_crn != null ? var.activity_tracker_crn : ""}'"
+  }
+  provisioner "local-exec" {
+    command = "echo 'Monitoring crn: ${var.metrics_monitoring_crn != null ? var.metrics_monitoring_crn : ""}'"
+  }
 }
 
 locals {
@@ -24,6 +30,25 @@ resource ibm_cos_bucket bucket_instance {
   region_location      = var.region
   storage_class        = var.storage_class
   key_protect          = var.kms_key_crn
+
+  dynamic "activity_tracking" {
+    for_each = var.activity_tracker_crn != null ? [var.activity_tracker_crn] : []
+
+    content {
+      read_data_events = true
+      write_data_events = true
+      activity_tracker_crn = activity_tracking.value
+    }
+  }
+
+  dynamic "metrics_monitoring" {
+    for_each = var.metrics_monitoring_crn != null ? [var.metrics_monitoring_crn] : []
+
+    content {
+      usage_metrics_enabled = true
+      metrics_monitoring_crn = metrics_monitoring.value
+    }
+  }
 }
 
 data ibm_cos_bucket bucket_instance {
@@ -31,7 +56,6 @@ data ibm_cos_bucket bucket_instance {
 
   bucket_name          = local.bucket_name
   resource_instance_id = var.cos_instance_id
-//  storage_class        = var.storage_class
   bucket_type          = "region_location"
   bucket_region        = var.region
 }

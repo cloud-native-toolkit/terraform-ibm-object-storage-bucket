@@ -53,3 +53,15 @@ variable "kms_key_crn" {
   description = "The crn of the root key in the KMS"
   default     = null
 }
+
+variable "activity_tracker_crn" {
+  type        = string
+  description = "The crn of the Activity Tracking instance"
+  default     = null
+}
+
+variable "metrics_monitoring_crn" {
+  type        = string
+  description = "The crn of the Metrics Monitoring instance"
+  default     = null
+}
