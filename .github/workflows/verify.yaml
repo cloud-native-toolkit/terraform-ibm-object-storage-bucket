@@ -16,7 +16,6 @@ jobs:
       matrix:
         platform:
         - ocp4_latest
-        - ocp4vpc_latest
       fail-fast: false
     env:
       HOME: /home/devops
