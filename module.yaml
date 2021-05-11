@@ -20,6 +20,16 @@ versions:
       refs:
         - source: github.com/ibm-garage-cloud/terraform-ibm-kms-key
           version: ">= 1.0.0"
+    - id: activity_tracker
+      refs:
+        - source: github.com/cloud-native-toolkit/terraform-ibm-activity-tracker
+          version: ">= 1.0.0"
+      optional: true
+    - id: metrics_monitoring
+      refs:
+        - source: github.com/cloud-native-toolkit/terraform-ibm-sysdig
+          version: ">= 1.0.0"
+      optional: true
   variables:
     - name: resource_group_name
       moduleRef:
@@ -33,6 +43,16 @@ versions:
       moduleRef:
         id: kms_key
         output: crn
+    - name: activity_tracker_crn
+      moduleRef:
+        id: activity_tracker
+        output: crn
+      optional: true
+    - name: metrics_monitoring_crn
+      moduleRef:
+        id: metrics_monitoring
+        output: crn
+      optional: true
     - name: ibmcloud_api_key
       scope: global
     - name: region
