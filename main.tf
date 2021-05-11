@@ -17,19 +17,22 @@ resource null_resource print_names {
 }
 
 locals {
-  prefix_name       = var.name_prefix != "" ? var.name_prefix : var.resource_group_name
-  bucket_name       = lower(replace(var.name != "" ? var.name : "${local.prefix_name}-${var.label}", "_", "-"))
+  prefix_name   = var.name_prefix != "" ? var.name_prefix : var.resource_group_name
+  bucket_name   = lower(replace(var.name != "" ? var.name : "${local.prefix_name}-${var.label}", "_", "-"))
+  bucket_type   = var.cross_region_location != "" ?  "cross_region_location" : "region_location"
+  bucket_region = local.bucket_type == "cross_region_location" ? var.cross_region_location : var.region
 }
 
 resource ibm_cos_bucket bucket_instance {
-  depends_on              = [null_resource.print_names]
-  count                   = (var.provision ? 1 : 0)
+  depends_on            = [null_resource.print_names]
+  count                 = (var.provision ? 1 : 0)
 
-  bucket_name          = local.bucket_name
-  resource_instance_id = var.cos_instance_id
-  region_location      = var.region
-  storage_class        = var.storage_class
-  key_protect          = var.kms_key_crn
+  bucket_name           = local.bucket_name
+  resource_instance_id  = var.cos_instance_id
+  region_location       = local.bucket_type == "region_location" ? local.bucket_region : null
+  cross_region_location = local.bucket_type == "cross_region_location" ? local.bucket_region : null
+  storage_class         = var.storage_class
+  key_protect           = var.kms_key_crn
 
   dynamic "activity_tracking" {
     for_each = var.activity_tracker_crn != null ? [var.activity_tracker_crn] : []
@@ -56,6 +59,6 @@ data ibm_cos_bucket bucket_instance {
 
   bucket_name          = local.bucket_name
   resource_instance_id = var.cos_instance_id
-  bucket_type          = "region_location"
-  bucket_region        = var.region
+  bucket_type          = local.bucket_type
+  bucket_region        = local.bucket_region
 }
