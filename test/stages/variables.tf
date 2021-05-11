@@ -46,5 +46,6 @@ variable "hpcs_resource_group_name" {
 }
 
 variable "cross_region_location" {
-  type = string
+  type    = string
+  default = ""
 }
