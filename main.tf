@@ -21,6 +21,8 @@ locals {
   bucket_name   = lower(replace(var.name != "" ? var.name : "${local.prefix_name}-${var.label}", "_", "-"))
   bucket_type   = var.cross_region_location != "" ?  "cross_region_location" : "region_location"
   bucket_region = local.bucket_type == "cross_region_location" ? var.cross_region_location : var.region
+  tmp_allowed_ips = concat(var.vpc_ip_addresses != null ? vpc_ip_addresses : [], var.allowed_ip != null ? var.allowed_ip : [])
+  allowed_ips = var.vpc_ip_addresses == null && var.allowed_ip == null ? null : local.tmp_allowed_ips
 }
 
 resource ibm_cos_bucket bucket_instance {
@@ -33,7 +35,7 @@ resource ibm_cos_bucket bucket_instance {
   cross_region_location = local.bucket_type == "cross_region_location" ? local.bucket_region : null
   storage_class         = var.storage_class
   key_protect           = var.kms_key_crn
-  allowed_ip            = var.allowed_ip
+  allowed_ip            = local.allowed_ips
 
   dynamic "activity_tracking" {
     for_each = var.activity_tracker_crn != null ? [var.activity_tracker_crn] : []

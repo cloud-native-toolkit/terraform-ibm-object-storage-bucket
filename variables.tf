@@ -82,3 +82,9 @@ variable "allowed_ip" {
   description = "A list of IPv4 or IPv6 addresses in CIDR notation that you want to allow access to your IBM Cloud Object Storage bucket."
   default     = null
 }
+
+variable "vpc_ip_addresses" {
+  type        = list(string)
+  description = "The list of ip addresses in the VPC that should be allowed to access the bucket."
+  default     = null
+}
