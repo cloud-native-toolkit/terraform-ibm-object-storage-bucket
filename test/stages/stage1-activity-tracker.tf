@@ -4,5 +4,4 @@ module "activity_tracker" {
   resource_group_name = module.resource_group.name
   resource_location   = var.region
   provision           = false
-  name                = "toolkit-dev-activity-tracker"
 }
