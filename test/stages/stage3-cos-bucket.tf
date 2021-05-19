@@ -17,10 +17,11 @@ module "dev_cos_bucket" {
   cos_instance_id        = module.cos.id
   name_prefix            = var.name_prefix
   ibmcloud_api_key       = var.ibmcloud_api_key
-  label                  = "bucket-${random_string.random.result}"
+  label                  = "bucket1-${random_string.random.result}"
   region                 = var.region
   cross_region_location  = var.cross_region_location
   kms_key_crn            = module.hpcs_key.crn
   activity_tracker_crn   = module.activity_tracker.crn
   metrics_monitoring_crn = module.monitoring.crn
+  allowed_ip             = ["0.0.0.0/0"]
 }
