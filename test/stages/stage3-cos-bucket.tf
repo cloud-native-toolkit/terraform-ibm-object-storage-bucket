@@ -23,5 +23,5 @@ module "dev_cos_bucket" {
   kms_key_crn            = module.hpcs_key.crn
   activity_tracker_crn   = module.activity_tracker.crn
   metrics_monitoring_crn = module.monitoring.crn
-  allowed_ip             = ["72.100.100.0/24"]
+  allowed_ip             = ["0.0.0.0/0"]
 }
