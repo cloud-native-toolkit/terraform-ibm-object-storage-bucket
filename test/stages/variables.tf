@@ -41,3 +41,21 @@ variable "cross_region_location" {
   type    = string
   default = ""
 }
+
+variable "COS-S3-ENDPOINT" {
+  type        = string
+  description = "S3-ENDPOINT of COS - https://s3.us.cloud-object-storage.appdomain.cloud for us "
+  #default     = "https://s3.us.cloud-object-storage.appdomain.cloud"
+}
+
+variable "ACCESS-KEY" {
+  type        = string
+  description = "ACCESS-KEY of COS"
+  #default     = "90cd7189490b4cda8198cd0b122081ab"
+}
+
+variable "SECRET-KEY" {
+  type        = string
+  description = "SECRET-KEY of COS"
+  #default     = "8d5baa706d9703bdfb76ff3fa6b4352e76d2ca64ff4e1911"
+}
