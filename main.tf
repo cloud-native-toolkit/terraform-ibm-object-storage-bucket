@@ -67,3 +67,21 @@ data ibm_cos_bucket bucket_instance {
   bucket_type          = local.bucket_type
   bucket_region        = local.bucket_region
 }
+
+resource "null_resource" "cos-contents-clean" {
+  triggers = {    
+    #namespace  = var.app_namespace
+    bucket-name = local.bucket_name
+    COS-S3-ENDPOINT = var.COS-S3-ENDPOINT
+    ACCESS-KEY = var.ACCESS-KEY
+    SECRET-KEY = var.SECRET-KEY
+
+  }
+  provisioner "local-exec" {
+    when = destroy
+    command = "./deleteCOS.sh ${self.triggers.bucket-name} ${self.triggers.COS-S3-ENDPOINT} ${self.triggers.ACCESS-KEY} ${self.triggers.SECRET-KEY}" 
+    #command = "./deleteCOS.sh appdev-cloud-native-bucket https://s3.us.cloud-object-storage.appdomain.cloud 90cd7189490b4cda8198cd0b122081ab 8d5baa706d9703bdfb76ff3fa6b4352e76d2ca64ff4e1911" 
+    interpreter = ["/bin/sh", "-c"]    
+  }
+}
+
