@@ -79,7 +79,7 @@ resource "null_resource" "cos-contents-clean" {
   }
   provisioner "local-exec" {
     when = destroy
-    command = "./deleteCOS.sh ${self.triggers.bucket-name} ${self.triggers.COS-S3-ENDPOINT} ${self.triggers.ACCESS-KEY} ${self.triggers.SECRET-KEY}" 
+    command = "${path.module}/scripts/deleteCOS.sh ${self.triggers.bucket-name} ${self.triggers.COS-S3-ENDPOINT} ${self.triggers.ACCESS-KEY} ${self.triggers.SECRET-KEY}"
     
     interpreter = ["/bin/sh", "-c"]    
   }
