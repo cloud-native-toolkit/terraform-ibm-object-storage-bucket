@@ -36,7 +36,7 @@ if [[ -z "$ENDPOINT_URL" ]] || [[ -z "$ACCESS_KEY" ]] || [[ -z "$SECRET_KEY" ]];
   exit 0
 fi
 
-ENDPOINT=$(curl -L "$ENDPOINT_URL" | jq --arg REGION "$REGION" -r '.service-endpoints.regional[$REGION]["public"][$REGION]'
+ENDPOINT=$(curl -L "$ENDPOINT_URL" | jq --arg REGION "$REGION" -r '.service-endpoints.regional[$REGION]["public"][$REGION]')
 
 VAR1=$(command -v ./mc)
 if [[ -z "$VAR1" ]]; then
