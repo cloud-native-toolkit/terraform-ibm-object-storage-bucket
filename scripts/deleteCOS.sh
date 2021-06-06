@@ -1,7 +1,5 @@
 #!/bin/bash
 
-set -e
-
 BUCKET_NAME="$1"
 KEY_ID="$2"
 
@@ -24,19 +22,25 @@ if [[ -z "${JQ}" ]]; then
   JQ="${PWD}/bin/jq"
 fi
 
+CREDENTIAL=$(ibmcloud resource service-key "${KEY_ID}" --output JSON | "$JQ" -c '.[]')
 
-CREDENTIAL=$(ibmcloud resource service-key "${KEY_ID}" --output JSON | "$JQ" -c '.')
+echo "Retrieved credentials"
+echo "$CREDENTIAL" | "$JQ" '.'
 
-ENDPOINT_URL=$(echo "${CREDENTIAL}" | jq -r '.[] | .credentials.endpoints // empty')
-ACCESS_KEY=$(echo "${CREDENTIAL}" | jq -r '.[] | .credentials.cos_hmac_keys.access_key_id // empty')
-SECRET_KEY=$(echo "${CREDENTIAL}" | jq -r '.[] | .credentials.cos_hmac_keys.secret_access_key // empty')
+ENDPOINT_URL=$(echo "${CREDENTIAL}" | "$JQ" -r '.credentials.endpoints // empty')
+ACCESS_KEY=$(echo "${CREDENTIAL}" | "$JQ" -r '.credentials.cos_hmac_keys.access_key_id // empty')
+SECRET_KEY=$(echo "${CREDENTIAL}" | "$JQ" -r '.credentials.cos_hmac_keys.secret_access_key // empty')
 
 if [[ -z "$ENDPOINT_URL" ]] || [[ -z "$ACCESS_KEY" ]] || [[ -z "$SECRET_KEY" ]]; then
   echo "ACCESS_KEY or SECRET_KEY could not be determined from credential: ${KEY_ID}. Be sure to enable HMAC on the COS credentials"
   exit 0
 fi
 
-ENDPOINT=$(curl -L "$ENDPOINT_URL" | jq --arg REGION "$REGION" -r '.service-endpoints.regional[$REGION]["public"][$REGION]')
+echo "ACCESS_KEY: $ACCESS_KEY"
+echo "SECRET_KEY: $SECRET_KEY"
+
+echo "Getting endpoints from $ENDPOINT_URL"
+ENDPOINT=$(curl -L "$ENDPOINT_URL" | "$JQ" --arg REGION "$REGION" -r '.service-endpoints.regional[$REGION]["public"][$REGION]')
 
 VAR1=$(command -v ./mc)
 if [[ -z "$VAR1" ]]; then
@@ -48,20 +52,16 @@ fi
 chmod +x mc
 echo "mc has permissions"
 
-./mc config host add IBMCOS "https://${ENDPOINT}" "$ACCESS_KEY" "$SECRET_KEY"
+./mc config host add IBMCOS "https://${ENDPOINT}" "$ACCESS_KEY" "$SECRET_KEY" || exit 0
 echo "Mc configration done"
 
 # delete contents
-./mc rm IBMCOS/$1/ --recursive --force
+./mc rm "IBMCOS/${BUCKET_NAME}/" --recursive --force || exit 0
 echo "deleted all bucket contents" 
 
 # remove MinIO
 rm -rf mc
 echo "Uninstalled MinIO"
-
-
-
-
 
 
 
