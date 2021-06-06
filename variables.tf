@@ -88,3 +88,9 @@ variable "vpc_ip_addresses" {
   description = "The list of ip addresses in the VPC that should be allowed to access the bucket."
   default     = null
 }
+
+variable "cos_key_id" {
+  type        = string
+  description = "The id of the key provisioned for the COS instance"
+  default     = ""
+}

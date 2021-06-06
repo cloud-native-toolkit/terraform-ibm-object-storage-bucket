@@ -44,6 +44,10 @@ versions:
       moduleRef:
         id: cos
         output: id
+    - name: cos_key_id
+      moduleRef:
+        id: cos
+        output: key_id
     - name: kms_key_crn
       moduleRef:
         id: kms_key
