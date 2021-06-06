@@ -69,19 +69,27 @@ data ibm_cos_bucket bucket_instance {
 }
 
 resource "null_resource" "cos-contents-clean" {
-  triggers = {    
-    #namespace  = var.app_namespace
-    bucket-name = local.bucket_name
-    COS-S3-ENDPOINT = var.COS-S3-ENDPOINT
-    ACCESS-KEY = var.ACCESS-KEY
-    SECRET-KEY = var.SECRET-KEY
+  depends_on = [data.ibm_cos_bucket.bucket_instance]
 
+  triggers = {
+    bucket-name      = local.bucket_name
+    key-id           = var.cos_key_id
+    ibmcloud_api_key = var.ibmcloud_api_key
+    region           = var.region
+    resource_group   = var.resource_group_name
   }
+
   provisioner "local-exec" {
     when = destroy
-    command = "${path.module}/scripts/deleteCOS.sh ${self.triggers.bucket-name} ${self.triggers.COS-S3-ENDPOINT} ${self.triggers.ACCESS-KEY} ${self.triggers.SECRET-KEY}"
+    command = "${path.module}/scripts/deleteCOS.sh ${self.triggers.bucket-name} ${self.triggers.key-id}"
     
-    interpreter = ["/bin/sh", "-c"]    
+    interpreter = ["/bin/sh", "-c"]
+
+    environment = {
+      IBMCLOUD_API_KEY = self.triggers.ibmcloud_api_key
+      REGION           = self.triggers.region
+      RESOURCE_GROUP   = self.triggers.resource_group
+    }
   }
 }
 

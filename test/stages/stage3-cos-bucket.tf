@@ -24,7 +24,5 @@ module "dev_cos_bucket" {
   activity_tracker_crn   = module.activity_tracker.crn
   metrics_monitoring_crn = module.monitoring.crn
   allowed_ip             = ["0.0.0.0/0"]  
-  COS-S3-ENDPOINT        = var.COS-S3-ENDPOINT
-  ACCESS-KEY             = var.ACCESS-KEY
-  SECRET-KEY             = var.SECRET-KEY
+  cos_key_id             = module.cos.key_id
 }

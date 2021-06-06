@@ -89,33 +89,8 @@ variable "vpc_ip_addresses" {
   default     = null
 }
 
-variable "COS-S3-ENDPOINT" {
+variable "cos_key_id" {
   type        = string
-  description = "S3-ENDPOINT of COS - https://s3.us.cloud-object-storage.appdomain.cloud for us "
-  #default     = "https://s3.us.cloud-object-storage.appdomain.cloud"
+  description = "The id of the key provisioned for the COS instance"
+  default     = ""
 }
-
-variable "ACCESS-KEY" {
-  type        = string
-  description = "ACCESS-KEY of COS"
-  #default     = "90cd7189490b4cda8198cd0b122081ab"
-}
-
-variable "SECRET-KEY" {
-  type        = string
-  description = "SECRET-KEY of COS"
-  #default     = "8d5baa706d9703bdfb76ff3fa6b4352e76d2ca64ff4e1911"
-}
-
-/*variable "bucket-name" {
-  type        = string
-  description = "COS bucket-name"
-  #default     = ""
-}*/
-
-variable "Alias" {
-  type        = string
-  description = "A description of my variable"
-  default     = "IBMCOS"
-}
-
