@@ -25,7 +25,7 @@ if [[ -z "${JQ}" ]]; then
 fi
 
 
-CREDENTIAL=$(ibmcloud resource service-key "" --output JSON | "$JQ" -c '.')
+CREDENTIAL=$(ibmcloud resource service-key "${KEY_ID}" --output JSON | "$JQ" -c '.')
 
 ENDPOINT_URL=$(echo "${CREDENTIAL}" | jq -r '.[] | .credentials.endpoints // empty')
 ACCESS_KEY=$(echo "${CREDENTIAL}" | jq -r '.[] | .credentials.cos_hmac_keys.access_key_id // empty')
