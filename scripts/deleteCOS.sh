@@ -24,9 +24,6 @@ fi
 
 CREDENTIAL=$(ibmcloud resource service-key "${KEY_ID}" --output JSON | "$JQ" -c '.[]')
 
-echo "Retrieved credentials"
-echo "$CREDENTIAL" | "$JQ" '.'
-
 ENDPOINT_URL=$(echo "${CREDENTIAL}" | "$JQ" -r '.credentials.endpoints // empty')
 ACCESS_KEY=$(echo "${CREDENTIAL}" | "$JQ" -r '.credentials.cos_hmac_keys.access_key_id // empty')
 SECRET_KEY=$(echo "${CREDENTIAL}" | "$JQ" -r '.credentials.cos_hmac_keys.secret_access_key // empty')
@@ -36,11 +33,9 @@ if [[ -z "$ENDPOINT_URL" ]] || [[ -z "$ACCESS_KEY" ]] || [[ -z "$SECRET_KEY" ]];
   exit 0
 fi
 
-echo "ACCESS_KEY: $ACCESS_KEY"
-echo "SECRET_KEY: $SECRET_KEY"
-
 echo "Getting endpoints from $ENDPOINT_URL"
-ENDPOINT=$(curl -L "$ENDPOINT_URL" | "$JQ" --arg REGION "$REGION" -r '.service-endpoints.regional[$REGION]["public"][$REGION]')
+ENDPOINT_HOST=$(curl -sL "$ENDPOINT_URL" | "$JQ" --arg REGION "$REGION" -r '."service-endpoints".regional[$REGION]["public"][$REGION]')
+ENDPOINT="https://${ENDPOINT_HOST}"
 
 VAR1=$(command -v ./mc)
 if [[ -z "$VAR1" ]]; then
@@ -52,17 +47,9 @@ fi
 chmod +x mc
 echo "mc has permissions"
 
-./mc config host add IBMCOS "https://${ENDPOINT}" "$ACCESS_KEY" "$SECRET_KEY" || exit 0
+./mc config host add IBMCOS "${ENDPOINT}" "$ACCESS_KEY" "$SECRET_KEY" || exit 0
 echo "Mc configration done"
 
 # delete contents
 ./mc rm "IBMCOS/${BUCKET_NAME}/" --recursive --force || exit 0
 echo "deleted all bucket contents" 
-
-# remove MinIO
-rm -rf mc
-echo "Uninstalled MinIO"
-
-
-
-
