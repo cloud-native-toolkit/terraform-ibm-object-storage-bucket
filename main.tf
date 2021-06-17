@@ -81,13 +81,12 @@ resource "null_resource" "cos-contents-clean" {
 
   provisioner "local-exec" {
     when = destroy
-    command = "${path.module}/scripts/deleteCOS.sh ${self.triggers.bucket-name} ${self.triggers.key-id}"
+    command = "${path.module}/scripts/deleteCOS.sh ${self.triggers.region} ${self.triggers.bucket-name} ${self.triggers.key-id}"
     
     interpreter = ["/bin/sh", "-c"]
 
     environment = {
       IBMCLOUD_API_KEY = self.triggers.ibmcloud_api_key
-      REGION           = self.triggers.region
       RESOURCE_GROUP   = self.triggers.resource_group
     }
   }
