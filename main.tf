@@ -18,7 +18,8 @@ resource null_resource print_names {
 
 locals {
   prefix_name   = var.name_prefix != "" ? var.name_prefix : var.resource_group_name
-  bucket_name   = lower(replace(var.name != "" ? var.name : "${local.prefix_name}-${var.label}", "_", "-"))
+  suffix        = var.suffix != "" ? "-${var.suffix}" : ""
+  bucket_name   = lower(replace(var.name != "" ? var.name : "${local.prefix_name}-${var.label}${local.suffix}", "_", "-"))
   bucket_type   = var.cross_region_location != "" ?  "cross_region_location" : "region_location"
   bucket_region = local.bucket_type == "cross_region_location" ? var.cross_region_location : var.region
   vpc_ip_addresses = var.vpc_ip_addresses != null ? var.vpc_ip_addresses : []

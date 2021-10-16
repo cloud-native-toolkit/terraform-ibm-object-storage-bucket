@@ -94,3 +94,9 @@ variable "cos_key_id" {
   description = "The id of the key provisioned for the COS instance"
   default     = ""
 }
+
+variable "suffix" {
+  description = "Value added to the generated name to ensure it is unique"
+  type        = string
+  default     = ""
+}
