@@ -103,8 +103,8 @@ versions:
         description: The name of the cos resource
         default: ""
         optional: true
-      - namd: suffix
-        scrop: global
+      - name: suffix
+        scope: global
       - name: provision
         type: bool
         description: Flag indicating that the instance should be provisioned. If false then an existing instance will be looked up
@@ -244,8 +244,8 @@ versions:
         description: The name of the cos resource
         default: ""
         optional: true
-      - namd: suffix
-        scrop: global
+      - name: suffix
+        scope: global
       - name: provision
         type: bool
         description: Flag indicating that the instance should be provisioned. If false then an existing instance will be looked up
