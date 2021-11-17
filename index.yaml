@@ -12,6 +12,146 @@ versions:
       - id: resource_group
         refs:
           - source: github.com/ibm-garage-cloud/terraform-ibm-resource-group
+            version: ">= 1.0.0"
+      - id: cos
+        refs:
+          - source: github.com/ibm-garage-cloud/terraform-ibm-object-storage
+            version: ">= 1.0.0"
+      - id: kms_key
+        refs:
+          - source: github.com/ibm-garage-cloud/terraform-ibm-kms-key
+            version: ">= 1.0.0"
+      - id: activity_tracker
+        refs:
+          - source: github.com/cloud-native-toolkit/terraform-ibm-activity-tracker
+            version: ">= 1.0.0"
+        optional: true
+      - id: metrics_monitoring
+        refs:
+          - source: github.com/cloud-native-toolkit/terraform-ibm-sysdig
+            version: ">= 1.0.0"
+        optional: true
+      - id: vpc
+        refs:
+          - source: github.com/cloud-native-toolkit/terraform-ibm-vpc
+            version: ">= 1.11.1"
+        optional: true
+    variables:
+      - name: resource_group_name
+        moduleRef:
+          id: resource_group
+          output: name
+        type: string
+        description: The name of the IBM Cloud resource group where the VPC instance will be created.
+      - name: cos_instance_id
+        moduleRef:
+          id: cos
+          output: id
+        type: string
+        description: id of the COS instance
+      - name: cos_key_id
+        moduleRef:
+          id: cos
+          output: key_id
+        type: string
+        description: The id of the key provisioned for the COS instance
+        default: ""
+        optional: true
+      - name: kms_key_crn
+        moduleRef:
+          id: kms_key
+          output: crn
+        type: string
+        description: The crn of the root key in the KMS
+        default: "null"
+        optional: true
+      - name: activity_tracker_crn
+        moduleRef:
+          id: activity_tracker
+          output: crn
+        optional: true
+        type: string
+        description: The crn of the Activity Tracking instance
+        default: "null"
+      - name: metrics_monitoring_crn
+        moduleRef:
+          id: metrics_monitoring
+          output: crn
+        optional: true
+        type: string
+        description: The crn of the Metrics Monitoring instance
+        default: "null"
+      - name: vpc_ip_addresses
+        moduleRef:
+          id: vpc
+          output: addresses
+        optional: true
+        type: list(string)
+        description: The list of ip addresses in the VPC that should be allowed to access the bucket.
+        default: null
+      - name: ibmcloud_api_key
+        scope: global
+        type: string
+        description: The IBM Cloud api token
+      - name: region
+        scope: global
+        type: string
+        description: Bucket region
+      - name: name_prefix
+        scope: global
+        type: string
+        description: The name of the cos resource
+        default: ""
+        optional: true
+      - name: suffix
+        scope: global
+        type: string
+        description: Value added to the generated name to ensure it is unique
+        default: ""
+        optional: true
+      - name: provision
+        type: bool
+        description: Flag indicating that the instance should be provisioned. If false then an existing instance will be looked up
+        default: true
+        optional: true
+      - name: name
+        type: string
+        description: Name of the bucket
+        default: ""
+        optional: true
+      - name: label
+        type: string
+        description: Label used to build the bucket name of not provided.
+        default: bucket
+        optional: true
+      - name: cross_region_location
+        type: string
+        description: The cross-region location of the bucket. This value is optional. Valid values are (us, eu, and ap). This value takes precedence over others if provided.
+        default: ""
+        optional: true
+      - name: storage_class
+        type: string
+        description: Storage class of the bucket. Supported values are standard, vault, cold, flex, smart.
+        default: standard
+        optional: true
+      - name: allowed_ip
+        type: list(string)
+        description: A list of IPv4 or IPv6 addresses in CIDR notation that you want to allow access to your IBM Cloud Object Storage bucket.
+        default: null
+        optional: true
+    version: v0.8.2
+    outputs:
+      - name: bucket_name
+        description: The name of the COS bucket instance
+      - name: id
+        description: The ID of the COS bucket instance
+      - name: crn
+        description: The CRN of the COS bucket instance
+  - platforms: []
+    dependencies:
+      - id: resource_group
+        refs:
+          - source: github.com/ibm-garage-cloud/terraform-ibm-resource-group
             version: '>= 1.0.0'
       - id: cos
         refs:
