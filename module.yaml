@@ -73,5 +73,5 @@ versions:
       scope: global
     - name: name_prefix
       scope: global
-    - namd: suffix
-      scrop: global
+    - name: suffix
+      scope: global
