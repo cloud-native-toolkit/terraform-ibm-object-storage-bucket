@@ -39,6 +39,9 @@ resource ibm_cos_bucket bucket_instance {
   storage_class         = var.storage_class
   key_protect           = var.kms_key_crn
   allowed_ip            = local.allowed_ips
+  object_versioning {
+    enable  = var.enable_object_versioning
+  }
 
   dynamic "activity_tracking" {
     for_each = var.activity_tracker_crn != null ? [var.activity_tracker_crn] : []

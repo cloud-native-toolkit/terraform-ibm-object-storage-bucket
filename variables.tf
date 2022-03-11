@@ -95,6 +95,12 @@ variable "cos_key_id" {
   default     = ""
 }
 
+variable "enable_object_versioning" {
+  description = "Object Versioning allows the COS user to keep multiple versions of an object in a bucket to protect against accidental deletion or overwrites. (Default = false)"
+  type        = bool
+  default = false
+}
+
 variable "suffix" {
   description = "Value added to the generated name to ensure it is unique"
   type        = string
