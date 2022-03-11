@@ -3,5 +3,5 @@ module "keyprotect_key" {
 
   provision = false
   kms_id = module.keyprotect.guid
-  name = var.kms_key_name
+  name = var.key_protect_key
 }

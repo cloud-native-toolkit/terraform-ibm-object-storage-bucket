@@ -25,15 +25,7 @@ variable "key_protect_name" {
   type        = string
 }
 
-variable "kms_key_name" {
-  type        = string
-}
-
-variable "hpcs_region" {
-  type        = string
-}
-
-variable "hpcs_resource_group_name" {
+variable "key_protect_key" {
   type        = string
 }
 
