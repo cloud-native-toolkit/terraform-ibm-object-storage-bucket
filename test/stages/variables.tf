@@ -21,7 +21,7 @@ variable "name_prefix" {
   default     = ""
 }
 
-variable "hpcs_name" {
+variable "key_protect_name" {
   type        = string
 }
 
