@@ -3,5 +3,5 @@ module "activity_tracker" {
 
   resource_group_name = module.resource_group.name
   resource_location   = var.region
-  provision           = false
+  ibmcloud_api_key       = var.ibmcloud_api_key
 }
