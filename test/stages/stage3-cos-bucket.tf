@@ -20,7 +20,7 @@ module "dev_cos_bucket" {
   label                  = "bucket1-${random_string.random.result}"
   region                 = var.region
   cross_region_location  = var.cross_region_location
-  kms_key_crn            = module.keyprotect_key.crn
+  # kms_key_crn            = module.keyprotect_key.crn
   activity_tracker_crn   = module.activity_tracker.crn
   metrics_monitoring_crn = module.monitoring.crn
   allowed_ip             = ["0.0.0.0/0"]  
